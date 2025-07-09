@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+setup.py
+srs_gen_ai.egg-info/PKG-INFO
+srs_gen_ai.egg-info/SOURCES.txt
+srs_gen_ai.egg-info/dependency_links.txt
+srs_gen_ai.egg-info/top_level.txt
