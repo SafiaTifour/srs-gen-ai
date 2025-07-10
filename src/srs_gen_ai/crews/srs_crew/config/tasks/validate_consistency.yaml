@@ -1,0 +1,13 @@
+validate_consistency:
+  description: >
+    Perform comprehensive quality assurance review of the SRS document to 
+    identify potential issues including duplicate requirements, conflicting 
+    statements, ambiguous language, missing information, and internal 
+    inconsistencies. Flag areas that need clarification or revision to ensure 
+    the specification is coherent and complete.
+  expected_output: >
+    A detailed validation report highlighting any identified issues, 
+    inconsistencies, or gaps in the SRS document. Include specific recommendations 
+    for resolving flagged issues and an overall assessment of document quality 
+    and completeness.
+  agent: consistency_checker
