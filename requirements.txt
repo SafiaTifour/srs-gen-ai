@@ -1,4 +1,5 @@
 crewai
 pydantic
 setuptools
+groq
 -e .
