@@ -1,52 +1,58 @@
-#!/usr/bin/env python
-from random import randint
 
 from pydantic import BaseModel
-
+from random import randint
 from crewai.flow import Flow, listen, start
+from srs_gen_ai.crews.srs_crew.srs_crew import SRSCrew
 
-from srs_gen_ai.crews.srs_crew.poem_crew import PoemCrew
+class SRSState(BaseModel):
+    """Maintains the state for the SRS Flow."""
+    input_text: str = ""
+    srs_document: str = ""
 
 
-class PoemState(BaseModel):
-    sentence_count: int = 1
-    poem: str = ""
-
-
-class PoemFlow(Flow[PoemState]):
+class SRSFlow(Flow[SRSState]):
+    """Main flow orchestrating the SRS generation process."""
 
     @start()
-    def generate_sentence_count(self):
-        print("Generating sentence count")
-        self.state.sentence_count = randint(1, 5)
+    def generate_random_input(self):
+        print("Generating random sample input")
+        self.state.input_text = f"System requirement sample #{randint(1, 100)}"
 
-    @listen(generate_sentence_count)
-    def generate_poem(self):
-        print("Generating poem")
+    @listen(generate_random_input)
+    def generate_srs(self):
+        print("Generating SRS Document...")
+
         result = (
-            PoemCrew()
+            SRSCrew()
             .crew()
-            .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            .kickoff(inputs={
+                "requirement_text": self.state.input_text,
+                "output_format": "PDF"
+            })
         )
 
-        print("Poem generated", result.raw)
-        self.state.poem = result.raw
 
-    @listen(generate_poem)
-    def save_poem(self):
-        print("Saving poem")
-        with open("poem.txt", "w") as f:
-            f.write(self.state.poem)
+        print("✅ SRS Document Generated:\n", result.raw)
+        self.state.srs_document = result.raw
+
+    @listen(generate_srs)
+    def save_srs_document(self):
+        print("Saving SRS Document to file...")
+        with open("srs_document.txt", "w", encoding="utf-8") as f:
+            f.write(self.state.srs_document)
+        print("✅ SRS Document saved to srs_document.txt")
 
 
 def kickoff():
-    poem_flow = PoemFlow()
-    poem_flow.kickoff()
+    """Run the flow normally."""
+    srs_flow = SRSFlow()
+    srs_flow.kickoff()
 
 
 def plot():
-    poem_flow = PoemFlow()
-    poem_flow.plot()
+    """Visualize the flow graph (optional)."""
+    srs_flow = SRSFlow()
+    srs_flow.plot()
 
 
 if __name__ == "__main__":
