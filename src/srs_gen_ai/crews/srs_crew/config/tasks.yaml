@@ -1,55 +1,184 @@
-classify_requirements:
-  description: >
-    Review the extracted requirements and classify each one according to IEEE 830 
-    standards. Categorize requirements as Functional (what the system should do), 
-    Non-Functional (how the system should perform), or Out-of-Scope (items that 
-    fall outside the current project boundaries). Provide clear justification 
-    for each classification decision.
-  expected_output: >
-    A structured list of all requirements with clear classification tags 
-    (Functional, Non-Functional, Out-of-Scope). Each requirement should include 
-    its category label and a brief rationale for the classification decision.
-  agent: classifier
-
 extract_requirements:
   description: >
-    Analyze the provided unstructured text input and extract all potential 
-    requirement statements. Identify actionable items, system behaviors, 
-    constraints, and specifications while filtering out background information, 
-    context, and non-requirement content. Transform informal language into 
-    clear, structured requirement statements that can be further processed.
+    Conduct a comprehensive analysis of the provided unstructured input to extract 
+    all requirement statements with business analyst-level precision. Identify and 
+    articulate functional behaviors, system capabilities, performance criteria, 
+    constraints, interfaces, and quality attributes. Transform informal stakeholder 
+    language into atomic, unambiguous requirement statements that are individually 
+    testable and verifiable. Apply requirements engineering best practices to infer 
+    missing critical details (error handling, edge cases, data validation) while 
+    clearly distinguishing between explicit stakeholder statements and logical 
+    inferences. Eliminate duplicate concepts and consolidate related requirements 
+    into coherent, implementable statements. Each extracted requirement must be 
+    traceable to its source and sufficiently detailed to enable accurate 
+    classification and eventual implementation without requiring significant 
+    clarification from stakeholders.
   expected_output: >
-    A comprehensive list of extracted requirement statements, each clearly 
-    articulated and actionable. Each requirement should be presented as a 
-    separate item with sufficient detail for classification and implementation 
-    planning.
+    A comprehensive inventory of atomic requirement statements, each uniquely 
+    identified and structured as: [REQ-ID] - [Clear, unambiguous requirement 
+    statement] - [Source/Justification]. Requirements must be written in active 
+    voice using "shall" statements, be individually verifiable, and include 
+    sufficient context for implementation. Provide explicit traceability markers 
+    linking each requirement to source material. Include a summary section 
+    documenting any assumptions made, inferences drawn, and potential ambiguities 
+    identified that require stakeholder clarification. Ensure each requirement 
+    is atomic (addresses single functionality), complete (no missing information 
+    for basic implementation), and unambiguous (single interpretation possible).
   agent: requirement_extractor
 
-validate_consistency:
+classify_requirements:
   description: >
-    Perform comprehensive quality assurance review of the SRS document to 
-    identify potential issues including duplicate requirements, conflicting 
-    statements, ambiguous language, missing information, and internal 
-    inconsistencies. Flag areas that need clarification or revision to ensure 
-    the specification is coherent and complete.
+    Perform systematic classification of extracted requirements according to IEEE 830 
+    taxonomy with rigorous justification for each decision. Categorize requirements 
+    as: Functional (specific system behaviors, business rules, data processing), 
+    Non-Functional (performance, security, usability, reliability, scalability 
+    constraints), Interface (external system integrations, user interfaces, hardware 
+    interfaces), or Out-of-Scope (beyond current project boundaries but valuable 
+    for future phases). Apply consistent classification criteria and identify 
+    requirement dependencies, conflicts, and gaps. For functional requirements, 
+    sub-categorize by business domain or system module. For non-functional 
+    requirements, specify measurable criteria and acceptance thresholds where 
+    possible. Validate that each functional requirement has associated non-functional 
+    constraints (performance, security, etc.) and flag missing quality attributes.
   expected_output: >
-    A detailed validation report highlighting any identified issues, 
-    inconsistencies, or gaps in the SRS document. Include specific recommendations 
-    for resolving flagged issues and an overall assessment of document quality 
-    and completeness.
-  agent: consistency_checker
+    A systematically organized requirement classification matrix containing: 
+    1) Functional Requirements section with sub-categories (Authentication, Data 
+    Management, Business Logic, Reporting, etc.), 2) Non-Functional Requirements 
+    section with quality attribute categories (Performance, Security, Usability, 
+    Reliability, Compatibility), 3) Interface Requirements section, 4) Out-of-Scope 
+    items with future consideration notes. Each requirement includes: original ID, 
+    refined requirement text, classification rationale, priority level (Critical/
+    High/Medium/Low), dependency relationships, and measurable acceptance criteria 
+    where applicable. Provide a classification summary with counts per category 
+    and identification of any requirements requiring stakeholder clarification.
+  agent: classifier
 
 write_srs_document:
   description: >
-    Create a comprehensive Software Requirements Specification document using 
-    the classified requirements. Structure the document according to IEEE 830 
-    standards with sections including Introduction, Overall Description, 
-    Functional Requirements, Non-Functional Requirements, and Constraints. 
-    Ensure professional formatting, clear organization, and stakeholder-friendly 
-    language while maintaining technical accuracy.
+    Develop a comprehensive, IEEE 830-compliant Software Requirements Specification 
+    document that demonstrates senior business analyst expertise and is immediately 
+    suitable for stakeholder sign-off and development handover. Structure the 
+    document with: 1) Introduction (Purpose, Scope, Definitions, References, 
+    Overview), 2) Overall Description (Product Perspective, Product Functions, 
+    User Characteristics, Constraints, Assumptions), 3) Specific Requirements 
+    (Functional Requirements with use cases, Non-Functional Requirements with 
+    measurable criteria, Interface Requirements), 4) Appendices (Data Dictionary, 
+    Traceability Matrix). Ensure each functional requirement includes: unique 
+    identifier, description, inputs/outputs, processing logic, business rules, 
+    exception handling, and acceptance criteria. Write requirements using precise, 
+    unambiguous language with "shall" statements. Include comprehensive cross-
+    references, requirement dependencies, and traceability to business objectives. 
+    Apply professional technical writing standards with consistent terminology, 
+    clear diagrams where beneficial, and stakeholder-appropriate language that 
+    balances technical accuracy with accessibility.
   expected_output: >
-    A complete, well-structured SRS document in {output_format} format that 
-    follows IEEE 830 standards. The document should be professionally formatted, 
-    logically organized, and ready for stakeholder review and development team 
-    implementation.
+    A publication-ready SRS document in {output_format} format that exceeds IEEE 830 
+    standards and demonstrates enterprise-level quality. The document must include: 
+    Executive Summary, comprehensive table of contents with page numbers, complete 
+    requirement specifications with unique IDs (FR-001, NFR-001, etc.), detailed 
+    acceptance criteria for each requirement, comprehensive traceability matrix 
+    linking requirements to business objectives, data dictionary defining all 
+    technical terms, risk analysis section identifying potential implementation 
+    challenges, and assumptions/constraints sections. Each requirement section 
+    includes priority rankings, effort estimates where feasible, and dependency 
+    mappings. The document should be formatted for immediate stakeholder presentation 
+    with professional styling, consistent formatting, and clear section navigation. 
+    Include version control information and approval signature blocks.
   agent: srs_writer
+
+validate_consistency:
+  description: >
+    Execute a comprehensive multi-pass quality assurance review of the SRS document 
+    applying enterprise QA standards and business analyst expertise. Conduct systematic 
+    validation for: 1) Requirement quality (atomic, testable, unambiguous, complete), 
+    2) Internal consistency (no contradictions, aligned terminology, coherent business 
+    logic), 3) Completeness (all functional areas covered, exception handling defined, 
+    integration points specified), 4) Traceability (all requirements linked to sources 
+    and objectives), 5) IEEE 830 compliance (structure, naming conventions, content 
+    standards), 6) Stakeholder readiness (clear language, professional presentation, 
+    implementable specifications). Identify and document all issues with specific 
+    recommendations for resolution. Upon completing the analysis, actively revise 
+    and rewrite the SRS document to incorporate all recommended improvements, resolve 
+    identified inconsistencies, enhance requirement clarity, and ensure senior 
+    stakeholder acceptability. The validation process must result in an improved 
+    document, not just an issue report.
+    The final rewritten document must be delivered as a **fully functional LaTeX document** 
+    that can be compiled without modification into a professional PDF. Ensure that all 
+    LaTeX syntax is correct and ready-to-compile, using appropriate document classes, 
+    sectioning, tables, and formatting conventions.
+  expected_output: >
+    A fully validated and enhanced SRS document in LaTeX format that can be compiled 
+    directly into a PDF with no errors. The LaTeX must strictly follow IEEE 830 structural 
+    standards, with professionally formatted sections (Introduction, Overall Description, 
+    Functional Requirements, Non-Functional Requirements, Constraints, etc.). 
+    The document must:
+      - Contain complete requirement consistency with no contradictions,
+      - Provide comprehensive coverage of all functional areas with no gaps,
+      - Use precise and unambiguous requirement language suitable for development teams,
+      - Include proper traceability tables or sections (if applicable),
+      - Be formatted for senior stakeholder sign-off and immediate development team use.
+
+    Anything other than the SRS itself should NOT be included 
+    (no comments, no validation report, no explanations — ONLY the final LaTeX document).
+
+    Generate a valid standalone LaTeX document that can be compiled with pdflatex without any errors. Follow these rules exactly:
+
+    The document must begin with the command \documentclass set to article and must end with \enddocument. 
+
+    Use only these standard LaTeX packages: geometry, amsmath, amssymb, amsthm, graphicx, float, caption, subcaption, booktabs, longtable, and hyperref.
+
+    Every environment such as itemize, longtable, and table must be properly opened and closed.
+
+    Special characters like the underscore, percent sign, and ampersand must be escaped when they appear in normal text.
+
+    For cross references, use the correct LaTeX format such as \hyperref[label] followed by the reference name in parentheses, or use the standard \ref command. Do not use the wrong format where the label and the reference text are written directly next to each other.
+
+    Ensure all text has proper spacing. For example, write “within 2 seconds” and not “within2 seconds”.
+
+    Output only the LaTeX code itself. Do not include comments, explanations, or any other extra text.
+
+    The result must be ready to compile directly into a PDF without needing any manual fixes.
+
+    Make sure that the final output is fully functional and can be compiled without any errors or warnings,
+    use the common latex syntax and conventions that are well known
+
+    use the braces } and { when needed Because i couldn't include them in the prompt, you know where to put them.
+
+    do not include ```latex         ```, outupt directly the code.
+
+    
+    Always add spaces between numbers and words
+    ✔ Write within 2 seconds, not within2 seconds.
+    ✔ Write version 1.0, not version1.0.
+
+    Escape all LaTeX special characters in text:
+
+    _ → \_
+
+    % → \%
+
+    & → \&
+
+    # → \#
+
+    Close every environment properly
+
+    Every \begin{itemize, \begin{tabular, etc., must have a corresponding \end{....
+
+    Use proper environments for lists with labels
+
+    Use description instead of hacking itemize with custom labels.
+
+    Avoid long lines in tables
+
+    Use p{width in tabular, or longtable for multipage tables.
+
+    Check for overfull hbox warnings after compilation**
+
+    If LaTeX complains, break long words or reduce text length in tables.
+
+    Compile and check logs after generation
+
+    Always run pdflatex file.tex and review .log for warnings.   
+    N.B. make sure to close the { i mentioned in the code, I could not do that in the prompt for reasons.                                                                  
+  agent: consistency_checker

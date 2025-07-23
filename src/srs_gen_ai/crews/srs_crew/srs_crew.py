@@ -33,40 +33,43 @@ class SRSCrew:
     # ------------------------
     # AGENTS
     # ------------------------
-    @agent
-    def classifier(self) -> Agent:
-        return Agent(config=self.agents_config["classifier"], llm=self.llm)
-
-    @agent
-    def consistency_checker(self) -> Agent:
-        return Agent(config=self.agents_config["consistency_checker"], llm=self.llm)
-
+        
     @agent
     def requirement_extractor(self) -> Agent:
         return Agent(config=self.agents_config["requirement_extractor"], llm=self.llm)
 
     @agent
+    def classifier(self) -> Agent:
+        return Agent(config=self.agents_config["classifier"], llm=self.llm)
+
+
+    @agent
     def srs_writer(self) -> Agent:
         return Agent(config=self.agents_config["srs_writer"], llm=self.llm)
+
+    @agent
+    def consistency_checker(self) -> Agent:
+        return Agent(config=self.agents_config["consistency_checker"], llm=self.llm)
 
     # ------------------------
     # TASKS
     # ------------------------
     @task
+    def extract_requirements(self) -> Task:
+        return Task(config=self.tasks_config["extract_requirements"])
+
+    @task
     def classify_requirements(self) -> Task:
         return Task(config=self.tasks_config["classify_requirements"])
 
     @task
-    def extract_requirements(self) -> Task:
-        return Task(config=self.tasks_config["extract_requirements"])
+    def write_srs_document(self) -> Task:
+        return Task(config=self.tasks_config["write_srs_document"])
 
     @task
     def validate_consistency(self) -> Task:
         return Task(config=self.tasks_config["validate_consistency"])
 
-    @task
-    def write_srs_document(self) -> Task:
-        return Task(config=self.tasks_config["write_srs_document"])
 
     # ------------------------
     # CREW
