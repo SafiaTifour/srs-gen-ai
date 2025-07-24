@@ -1,235 +1,202 @@
 \documentclass{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{booktabs}
-\usepackage{longtable}
 \usepackage{hyperref}
-\hypersetup{
- colorlinks = true,
- linkcolor = blue,
- urlcolor = blue,
- citecolor = blue
-}
+\usepackage{longtable}
+\usepackage{booktabs}
 
 \begin{document}
 
 \title{Software Requirements Specification (SRS) Document}
 \author{}
-\date{}
+\date{\today}
 
 \maketitle
 
 \tableofcontents
 
-\section{Introduction}
-\label{sec:introduction}
+\section{Executive Summary}
+This Software Requirements Specification (SRS) document outlines the requirements for the development of a comprehensive inventory system. The system aims to provide a secure, scalable, and reliable solution for managing user accounts, roles, and access control. This document serves as a contract between the stakeholders and the development team, ensuring that the system meets the required standards and functionality.
 
+\section{Introduction}
 \subsection{Purpose}
-The purpose of this Software Requirements Specification (SRS) document is to provide a detailed description of the requirements for the system. This document is intended for stakeholders, developers, and testers.
+The purpose of this SRS document is to provide a detailed description of the requirements for the development of the inventory system.
 
 \subsection{Scope}
-The scope of this project is to develop a system that provides authentication, authorization, and auditing capabilities.
+The scope of this project includes the development of a web-based inventory system that provides user authentication, role-based access control, and data encryption.
 
 \subsection{Definitions}
 \begin{itemize}
- \item \textbf{System}: The system refers to the software application being developed.
- \item \textbf{User}: A user is an individual who interacts with the system.
+\item \textbf{System}: The inventory system to be developed.
+\item \textbf{User}: An individual who interacts with the system.
+\item \textbf{Administrator}: A user with elevated privileges to manage the system.
 \end{itemize}
 
 \subsection{References}
 \begin{itemize}
- \item \textbf{IEEE830-1998}: Standard for Software Requirements Specifications.
+\item Stakeholder Interview Notes
+\item Security Best Practices
+\item Data Quality Requirements
 \end{itemize}
 
 \subsection{Overview}
-The system will provide the following capabilities:
-
-\begin{itemize}
- \item User authentication and authorization
- \item Auditing and logging
- \item Integration with existing user management systems
-\end{itemize}
+The system will be built using a web-based architecture and hosted on a cloud-based infrastructure. The system will provide a user interface to manage user accounts and roles, as well as a mechanism for users to reset their passwords.
 
 \section{Overall Description}
-\label{sec:overall-description}
-
 \subsection{Product Perspective}
-The system will be a web-based application that interacts with a database to store user information and system logs.
+The system will be a web-based application that interacts with a centralized identity management system.
 
 \subsection{Product Functions}
 The system will provide the following functions:
-
 \begin{itemize}
- \item User authentication and authorization
- \item Auditing and logging
- \item Integration with existing user management systems
+\item User authentication
+\item Role-based access control
+\item Data encryption
+\item Error handling and logging
+\item Data backup and disaster recovery
 \end{itemize}
 
 \subsection{User Characteristics}
-The users of the system will be administrators and end-users.
+The users of the system will be administrators and end-users. Administrators will have elevated privileges to manage the system, while end-users will have limited access.
 
 \subsection{Constraints}
-The system will be built using a web-based architecture and will be hosted on a cloud-based infrastructure.
+The system will be built using a web-based architecture and hosted on a cloud-based infrastructure.
 
 \subsection{Assumptions}
-The following assumptions have been made:
-
 \begin{itemize}
- \item The system will be built using a web-based architecture.
- \item The system will be hosted on a cloud-based infrastructure.
+\item The system will be built using a web-based architecture.
+\item The system will be hosted on a cloud-based infrastructure.
 \end{itemize}
 
 \section{Specific Requirements}
-\label{sec:specific-requirements}
 
 \subsection{Functional Requirements}
 
-\subsubsection{Authentication}
-
-\paragraph{REQ-001}
-The system shall authenticate users via a unique username and password combination.
+\subsubsection{REQ-001: User Authentication}
+The system shall authenticate user credentials against a centralized identity management system.
 
 \begin{itemize}
- \item \textbf{Description}: The system shall authenticate users using a unique username and password combination.
- \item \textbf{Inputs/Outputs}:
- \begin{itemize}
- \item Input: Username and password
- \item Output: Authentication result (success/failure)
- \end{itemize}
- \item \textbf{Processing Logic}:
- \begin{itemize}
- \item The system shall verify the username and password against the stored credentials.
- \end{itemize}
- \item \textbf{Business Rules}:
- \begin{itemize}
- \item The system shall enforce password complexity rules.
- \end{itemize}
- \item \textbf{Exception Handling}:
- \begin{itemize}
- \item The system shall display an error message for invalid login attempts.
- \end{itemize}
- \item \textbf{Acceptance Criteria}:
- \begin{itemize}
- \item Successful login with valid credentials.
- \end{itemize}
+\item \textbf{Description}: The system will verify user credentials against a centralized identity management system.
+\item \textbf{Inputs}: User credentials (username and password)
+\item \textbf{Outputs}: Authentication result (success or failure)
+\item \textbf{Processing Logic}: The system will use a secure authentication protocol to verify user credentials.
+\item \textbf{Business Rules}: The system will enforce a password policy that requires passwords to be changed every 90 days.
+\item \textbf{Exception Handling}: The system will display an error message if authentication fails.
+\item \textbf{Acceptance Criteria}: The system shall authenticate user credentials successfully.
 \end{itemize}
 
-\paragraph{REQ-003}
-The system shall display a login error message when invalid credentials are provided.
+\subsubsection{REQ-002: Single Sign-On (SSO)}
+The system shall provide a single sign-on (SSO) capability for all authorized users.
 
 \begin{itemize}
- \item \textbf{Description}: The system shall display a login error message for invalid credentials.
- \item \textbf{Inputs/Outputs}:
- \begin{itemize}
- \item Input: Invalid username and/or password
- \item Output: Login error message
- \end{itemize}
- \item \textbf{Processing Logic}:
- \begin{itemize}
- \item The system shall verify the username and password against the stored credentials.
- \end{itemize}
- \item \textbf{Business Rules}:
- \begin{itemize}
- \item The system shall enforce password complexity rules.
- \end{itemize}
- \item \textbf{Exception Handling}:
- \begin{itemize}
- \item The system shall display an error message for invalid login attempts.
- \end{itemize}
- \item \textbf{Acceptance Criteria}:
- \begin{itemize}
- \item Error message displayed within2 seconds of invalid login attempt.
- \end{itemize}
+\item \textbf{Description}: The system will provide a single sign-on capability for all authorized users.
+\item \textbf{Inputs}: User credentials (username and password)
+\item \textbf{Outputs}: SSO token
+\item \textbf{Processing Logic}: The system will use a secure authentication protocol to generate an SSO token.
+\item \textbf{Business Rules}: The system will enforce a session timeout policy.
+\item \textbf{Exception Handling}: The system will display an error message if SSO fails.
+\item \textbf{Acceptance Criteria}: The system shall provide a single sign-on capability successfully.
+\end{itemize}
+
+\subsubsection{REQ-003: Input Data Validation}
+The system shall validate user input data to prevent SQL injection attacks.
+
+\begin{itemize}
+\item \textbf{Description}: The system will validate user input data to prevent SQL injection attacks.
+\item \textbf{Inputs}: User input data
+\item \textbf{Outputs}: Validation result (success or failure)
+\item \textbf{Processing Logic}: The system will use a secure validation protocol to verify user input data.
+\item \textbf{Business Rules}: The system will enforce data validation rules.
+\item \textbf{Exception Handling}: The system will display an error message if validation fails.
+\item \textbf{Acceptance Criteria}: The system shall validate user input data successfully.
 \end{itemize}
 
 \subsection{Non-Functional Requirements}
 
-\paragraph{REQ-008}
-The system shall handle1000 concurrent user sessions without performance degradation.
+\subsubsection{NFR-001: Performance}
+The system shall respond to user requests within 2 seconds.
 
 \begin{itemize}
- \item \textbf{Description}: The system shall handle1000 concurrent user sessions without performance degradation.
- \item \textbf{Measurable Criteria}:
- \begin{itemize}
- \item System response time <2 seconds for1000 concurrent users.
- \end{itemize}
+\item \textbf{Description}: The system will respond to user requests within 2 seconds.
+\item \textbf{Measurable Criteria}: The system shall respond to user requests within 2 seconds.
+\end{itemize}
+
+\subsubsection{NFR-002: Security}
+The system shall ensure that all data transmitted between the client and server is encrypted using TLS 1.2 or later.
+
+\begin{itemize}
+\item \textbf{Description}: The system will ensure that all data transmitted between the client and server is encrypted using TLS 1.2 or later.
+\item \textbf{Measurable Criteria}: The system shall ensure that all data transmitted between the client and server is encrypted using TLS 1.2 or later.
 \end{itemize}
 
 \subsection{Interface Requirements}
 
-\paragraph{REQ-014}
-The system shall support integration with existing user management systems via LDAP or SAML.
+\subsubsection{REQ-INT-001: User Interface}
+The system shall provide a user interface to manage user accounts and roles.
 
 \begin{itemize}
- \item \textbf{Description}: The system shall support integration with existing user management systems via LDAP or SAML.
- \item \textbf{Measurable Criteria}:
- \begin{itemize}
- \item Successful integration with LDAP or SAML systems.
- \end{itemize}
+\item \textbf{Description}: The system will provide a user interface to manage user accounts and roles.
+\item \textbf{Inputs}: User input (username, password, role)
+\item \textbf{Outputs}: User account and role information
+\item \textbf{Processing Logic}: The system will use a secure authentication protocol to manage user accounts and roles.
+\item \textbf{Business Rules}: The system will enforce a role-based access control policy.
+\item \textbf{Exception Handling}: The system will display an error message if user account or role management fails.
+\item \textbf{Acceptance Criteria}: The system shall provide a user interface to manage user accounts and roles successfully.
 \end{itemize}
 
 \section{Appendices}
-\label{sec:appendices}
 
 \subsection{Data Dictionary}
-
 \begin{itemize}
- \item \textbf{User}: A user is an individual who interacts with the system.
- \item \textbf{Username}: A unique identifier for a user.
- \item \textbf{Password}: A secret password for a user.
+\item \textbf{User}: An individual who interacts with the system.
+\item \textbf{Administrator}: A user with elevated privileges to manage the system.
+\item \textbf{Role}: A set of privileges assigned to a user.
 \end{itemize}
 
 \subsection{Traceability Matrix}
-
-\begin{tabular}{|c|c|}
+\begin{longtable}{|l|l|}
 \hline
-Requirement ID & Business Objective \\
+REQ-ID & Source/Justification \\
 \hline
-REQ-001 & Authenticate users \\
-REQ-003 & Display login error message \\
-REQ-008 & Handle1000 concurrent user sessions \\
+REQ-001 & Stakeholder Interview Notes, Section 3.1 \\
+REQ-002 & Stakeholder Interview Notes, Section 3.2 \\
+REQ-003 & Security Best Practices \\
+... & ... \\
 \hline
-\end{tabular}
+\end{longtable}
 
 \subsection{Risk Analysis}
-
 The following risks have been identified:
-
 \begin{itemize}
- \item \textbf{Risk1}: Technical difficulties in implementing the system.
- \item \textbf{Risk2}: Delay in development timeline.
+\item \textbf{Risk 1}: The system may not meet performance requirements.
+\item \textbf{Risk 2}: The system may not ensure data security.
 \end{itemize}
 
 \subsection{Assumptions and Constraints}
-
-The following assumptions and constraints have been identified:
-
 \begin{itemize}
- \item \textbf{Assumption1}: The system will be built using a web-based architecture.
- \item \textbf{Assumption2}: The system will be hosted on a cloud-based infrastructure.
- \item \textbf{Constraint1}: The system shall be developed within a specific timeline.
+\item \textbf{Assumptions}:
++ The system will be built using a web-based architecture.
++ The system will be hosted on a cloud-based infrastructure.
+\item \textbf{Constraints}:
++ The system shall be developed within 6 months.
++ The system shall be deployed on a cloud-based infrastructure.
 \end{itemize}
 
-\section{Approval and Version Control}
-
-\subsection{Approval}
-
-This document has been approved by:
+\section{Approval Signature Blocks}
+This SRS document has been approved by the following stakeholders:
 
 \begin{itemize}
- \item \textbf{Name}: John Doe
- \item \textbf{Title}: Project Manager
- \item \textbf{Signature}: 
- \item \textbf{Date}: 
+\item \textbf{Project Manager}: [Name]
+\item \textbf{Business Analyst}: [Name]
+\item \textbf{Technical Lead}: [Name]
 \end{itemize}
 
-\subsection{Version Control}
-
-This document is version1.0.
+\section{Version Control Information}
+This SRS document is version 1.0 and was last updated on \today.
 
 \end{document}

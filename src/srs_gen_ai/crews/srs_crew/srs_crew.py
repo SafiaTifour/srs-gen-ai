@@ -42,7 +42,6 @@ class SRSCrew:
     def classifier(self) -> Agent:
         return Agent(config=self.agents_config["classifier"], llm=self.llm)
 
-
     @agent
     def srs_writer(self) -> Agent:
         return Agent(config=self.agents_config["srs_writer"], llm=self.llm)
@@ -50,6 +49,10 @@ class SRSCrew:
     @agent
     def consistency_checker(self) -> Agent:
         return Agent(config=self.agents_config["consistency_checker"], llm=self.llm)
+
+    @agent
+    def latex_generator(self) -> Agent:
+        return Agent(config=self.agents_config["latex_generator"], llm=self.llm)
 
     # ------------------------
     # TASKS
@@ -70,6 +73,9 @@ class SRSCrew:
     def validate_consistency(self) -> Task:
         return Task(config=self.tasks_config["validate_consistency"])
 
+    @task
+    def generate_latex_srs(self) -> Task:
+        return Task(config=self.tasks_config["generate_latex_srs"])
 
     # ------------------------
     # CREW
@@ -82,4 +88,3 @@ class SRSCrew:
             process=Process.sequential,
             verbose=True,
         )
-

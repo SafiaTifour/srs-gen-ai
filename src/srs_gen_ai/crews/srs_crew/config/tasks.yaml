@@ -97,88 +97,96 @@ validate_consistency:
     and objectives), 5) IEEE 830 compliance (structure, naming conventions, content 
     standards), 6) Stakeholder readiness (clear language, professional presentation, 
     implementable specifications). Identify and document all issues with specific 
-    recommendations for resolution. Upon completing the analysis, actively revise 
-    and rewrite the SRS document to incorporate all recommended improvements, resolve 
-    identified inconsistencies, enhance requirement clarity, and ensure senior 
-    stakeholder acceptability. The validation process must result in an improved 
-    document, not just an issue report.
-    The final rewritten document must be delivered as a **fully functional LaTeX document** 
-    that can be compiled without modification into a professional PDF. Ensure that all 
-    LaTeX syntax is correct and ready-to-compile, using appropriate document classes, 
-    sectioning, tables, and formatting conventions.
+    recommendations for resolution. Create a comprehensive validation report that 
+    categorizes findings by severity and provides actionable improvement recommendations 
+    for each identified issue.
   expected_output: >
-    A fully validated and enhanced SRS document in LaTeX format that can be compiled 
-    directly into a PDF with no errors. The LaTeX must strictly follow IEEE 830 structural 
-    standards, with professionally formatted sections (Introduction, Overall Description, 
-    Functional Requirements, Non-Functional Requirements, Constraints, etc.). 
-    The document must:
-      - Contain complete requirement consistency with no contradictions,
-      - Provide comprehensive coverage of all functional areas with no gaps,
-      - Use precise and unambiguous requirement language suitable for development teams,
-      - Include proper traceability tables or sections (if applicable),
-      - Be formatted for senior stakeholder sign-off and immediate development team use.
-
-    Anything other than the SRS itself should NOT be included 
-    (no comments, no validation report, no explanations — ONLY the final LaTeX document).
-
-    Generate a valid standalone LaTeX document that can be compiled with pdflatex without any errors. Follow these rules exactly:
-
-    The document must begin with the command \documentclass set to article and must end with \enddocument. 
-
-    Use only these standard LaTeX packages: geometry, amsmath, amssymb, amsthm, graphicx, float, caption, subcaption, booktabs, longtable, and hyperref.
-
-    Every environment such as itemize, longtable, and table must be properly opened and closed.
-
-    Special characters like the underscore, percent sign, and ampersand must be escaped when they appear in normal text.
-
-    For cross references, use the correct LaTeX format such as \hyperref[label] followed by the reference name in parentheses, or use the standard \ref command. Do not use the wrong format where the label and the reference text are written directly next to each other.
-
-    Ensure all text has proper spacing. For example, write “within 2 seconds” and not “within2 seconds”.
-
-    Output only the LaTeX code itself. Do not include comments, explanations, or any other extra text.
-
-    The result must be ready to compile directly into a PDF without needing any manual fixes.
-
-    Make sure that the final output is fully functional and can be compiled without any errors or warnings,
-    use the common latex syntax and conventions that are well known
-
-    use the braces } and { when needed Because i couldn't include them in the prompt, you know where to put them.
-
-    do not include ```latex         ```, outupt directly the code.
-
-    
-    Always add spaces between numbers and words
-    ✔ Write within 2 seconds, not within2 seconds.
-    ✔ Write version 1.0, not version1.0.
-
-    Escape all LaTeX special characters in text:
-
-    _ → \_
-
-    % → \%
-
-    & → \&
-
-    # → \#
-
-    Close every environment properly
-
-    Every \begin{itemize, \begin{tabular, etc., must have a corresponding \end{....
-
-    Use proper environments for lists with labels
-
-    Use description instead of hacking itemize with custom labels.
-
-    Avoid long lines in tables
-
-    Use p{width in tabular, or longtable for multipage tables.
-
-    Check for overfull hbox warnings after compilation**
-
-    If LaTeX complains, break long words or reduce text length in tables.
-
-    Compile and check logs after generation
-
-    Always run pdflatex file.tex and review .log for warnings.   
-    N.B. make sure to close the { i mentioned in the code, I could not do that in the prompt for reasons.                                                                  
+    A detailed validation report containing:
+      - Executive summary of document quality assessment
+      - Categorized findings (Critical, Major, Minor issues)
+      - Specific line-by-line issue identification with context
+      - Recommended improvements for each finding
+      - Consistency analysis across all sections
+      - Completeness gap analysis
+      - IEEE 830 compliance checklist results
+      - Stakeholder readiness assessment
+      - Prioritized action items for document enhancement
+    The report should be structured for easy review by senior stakeholders and 
+    development teams, providing clear guidance for document improvement.
   agent: consistency_checker
+
+generate_latex_srs:
+  description: >
+    Transform the validated SRS content into a professionally formatted LaTeX document 
+    that can be compiled directly into a PDF without modification. Apply all improvements 
+    and recommendations from the validation phase to create an enhanced, consistent, 
+    and complete requirements specification. The document must strictly follow IEEE 830 
+    structural standards and LaTeX best practices for technical documentation.
+  expected_output: >
+    A fully functional LaTeX document that can be compiled directly into a PDF with 
+    no errors. The LaTeX must strictly follow IEEE 830 structural standards, with 
+    professionally formatted sections (Introduction, Overall Description, Functional 
+    Requirements, Non-Functional Requirements, Constraints, etc.). 
+    The document must:
+      - Contain complete requirement consistency with no contradictions
+      - Provide comprehensive coverage of all functional areas with no gaps
+      - Use precise and unambiguous requirement language suitable for development teams
+      - Include proper traceability tables or sections (if applicable)
+      - Be formatted for senior stakeholder sign-off and immediate development team use
+
+    Use a syntax that is well known and guarantees compatibility with standard LaTeX, do not go for confusing syntax;
+    you have to be sure that the syntax you are using is fully correct, if any doubt don't use it.
+
+    Generate a valid standalone LaTeX document that can be compiled with pdflatex 
+    without any errors. Follow these rules exactly:
+
+    The document must begin with \documentclass set to article and must end with \end document.
+
+    Use only these standard LaTeX packages: geometry, amsmath, amssymb, amsthm, 
+    graphicx, float, caption, subcaption, booktabs, longtable, and hyperref.
+
+    Every environment such as itemize, longtable, and table must be properly opened 
+    and closed with matching begin and end commands using the braces where needed.
+
+    Special characters like the underscore, percent sign, and ampersand must be 
+    escaped when they appear in normal text (_ → \_, % → \%, & → \&, # → \#).
+
+    For cross references, use the correct LaTeX format such as \hyperref[label] 
+    followed by the reference name in braces, or use the standard \ref command 
+    with the label in braces. Do not use incorrect formats.
+
+    Ensure all text has proper spacing. For example, write "within 2 seconds" 
+    and not "within2 seconds", write "version 1.0" not "version1.0".
+
+    Use proper environments for lists:
+      - Use begin itemize with braces for bullet points
+      - Use begin enumerate with braces for numbered lists  
+      - Use begin description with braces for labeled lists instead of hacking itemize
+
+    For tables:
+      - Use p followed by width in braces in tabular for text wrapping
+      - Use longtable for multipage tables
+      - Avoid overfull hbox warnings by breaking long content
+
+    Output only the LaTeX code itself. Do not include latex code blocks, comments, 
+    explanations, or any other extra text. The result must be ready to compile 
+    directly into a PDF without needing any manual fixes.
+
+    Always add spaces between numbers and words, escape all LaTeX special characters 
+    in text, close every environment properly, and ensure the final output compiles 
+    without errors or warnings using standard LaTeX syntax and conventions.
+    
+    Use the braces where needed in LaTeX commands - you know where to put them 
+    based on standard LaTeX syntax.
+
+    latex_guidelines:
+      - "Always leave a space between numbers and words. Example: write 'within 2 seconds' instead of 'within2 seconds'."
+      - "Use the correct list environment: 'itemize' for bullets, 'enumerate' for numbered lists, and 'description' for labeled lists. Do not simulate labels with itemize."
+      - "Escape special LaTeX characters: use \\_ for _, \\% for %, \\& for &, \\# for #, and \\{  for curly braces."
+      - "Format tables properly when including long text: use fixed-width columns in tabular or longtable to prevent overflow."
+      - "Keep list items concise: avoid long paragraphs inside \\item; split them into shorter sentences or insert manual line breaks (\\\\) if needed."
+      - "Replace all placeholder text such as [Date] or [Name] with actual values before finalizing. Use macros like \\today for dates if needed."
+      - "Compile and validate the document with pdflatex after generation. Check logs for errors and warnings (e.g., overfull hbox)."
+      - "Use only standard LaTeX packages: geometry, amsmath, amssymb, graphicx, float, caption, subcaption, booktabs, longtable, hyperref."
+
+  agent: latex_generator
